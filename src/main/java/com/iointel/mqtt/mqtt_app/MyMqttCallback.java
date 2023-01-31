@@ -19,7 +19,7 @@ public class MyMqttCallback implements MqttCallback {
 
 	@Override
 	public void connectionLost(Throwable cause) {
-		logger.fatal(cause);
+		logger.error(cause);
 		MqttClient client;
 		try {
 			client = MqttUtility.createClient(Constants.Init.broker, Constants.Init.clientId,

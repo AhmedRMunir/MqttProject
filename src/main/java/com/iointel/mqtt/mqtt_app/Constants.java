@@ -9,11 +9,18 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class Constants {
 
+	public static final class Init {
+		public static final Logger logger = LogManager.getLogger();
+		public static MyMqttCallback callback = new MyMqttCallback();
+		public static MqttClientPersistence persistence = new MemoryPersistence();
+		public static String broker = "tcp://localhost:1883";
+		public static String clientId = UUID.randomUUID().toString();
+		public static String topic = "MQTT_Examples";
+		public static int qos = 0;
+
+	}
+
 	public static final class Exception {
-		public static final class Application {
-			public static final String Initialization = "Application initialization failed!";
-			public static final String ScheduledExecutor = "Scheduled Executor Service failed!";
-		}
 
 		public static final class Mqtt {
 			public static final String ClientCreate = "Client creation failed!";
@@ -25,14 +32,4 @@ public class Constants {
 		}
 	}
 
-	public static final class Init {
-		public static final Logger logger = LogManager.getLogger();
-		public static MyMqttCallback callback = new MyMqttCallback();
-		public static MqttClientPersistence persistence = new MemoryPersistence();
-		public static String broker = "tcp://localhost:1883";
-		public static String clientId = UUID.randomUUID().toString();
-		public static String topic = "MQTT_Examples";
-		public static int qos = 0;
-
-	}
 }
