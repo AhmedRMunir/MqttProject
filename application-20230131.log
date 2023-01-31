@@ -18,3 +18,7 @@
 2023-01-31 09:14:16.728 [main] INFO  com.iointel.mqtt.mqtt_app.App - Exception: Client is not connected (32104)
 2023-01-31 09:14:16.728 [main] ERROR com.iointel.mqtt.mqtt_app.App - Reason 32104
 2023-01-31 09:14:16.729 [main] ERROR com.iointel.mqtt.mqtt_app.App - Client is not connected (32104)
+2023-01-31 15:48:06.564 [main] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - App Start
+2023-01-31 15:48:06.959 [MQTT Call: 3cc268e3-129a-45cb-ac91-e44f9e845b30] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Delivered
+2023-01-31 15:48:06.960 [MQTT Call: 3cc268e3-129a-45cb-ac91-e44f9e845b30] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Published: Sample Message
+2023-01-31 15:48:06.960 [MQTT Call: 3cc268e3-129a-45cb-ac91-e44f9e845b30] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Subscribed Message: Sample Message
