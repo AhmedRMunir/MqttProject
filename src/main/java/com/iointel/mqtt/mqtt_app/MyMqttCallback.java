@@ -37,18 +37,16 @@ public class MyMqttCallback implements MqttCallback{
     	writePayloadToFile(payload, file);
 	}
 	
-	// Creates a binary file with the given id under a dir with the topic name
+	// Creates a binary file with id as name under tmpdir/MqttData/{topic}
 	private File createMessageFile(String topic, int id) {
 		return createMessageFile(topic, id, "");
 	}
 	
-	// Creates a file of the given extension type
-	// with the given id in a dir with the given topic
-	// If the dir doesn't exist, it will be created
-	// All files and folders will be created in tmpdir/MqttData
-	// Returns: a file object of the newly created file
+	// Saves each message in a file with the given extension
+	// Saves the messages under a dir with the provided topic name
+	// Creates each dir under another dir called "MqttData" in tmpdir
+	// Returns a File object of the newly created file
 	private File createMessageFile(String topic, int id, String extension) {
-		// Save each message as a separate file in tmpdir/MqttData
     	String dirName = System.getProperty("java.io.tmpdir") + File.separator + "MqttData";
     	
     	File mqttDataDir = new File(dirName);
@@ -89,7 +87,6 @@ public class MyMqttCallback implements MqttCallback{
     			logger.trace(e.getStackTrace());
     		}
     	}
-    		
     	logger.debug("Message Bytes dumped into file: " + file.getName());	
 	}
 

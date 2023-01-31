@@ -15,20 +15,20 @@ public class App {
 	// Log4j Logger instantiation
 	private static final Logger logger = LogManager.getLogger();
 	private static MqttClient client;
-	private static MyMqttCallback cb;
+	private static MyMqttCallback callback;
 	private static String broker;
 	private static String clientId;
 	private static MemoryPersistence persistence;
 	
 	
     public static void main(String[] args) {     
-    	String topic        = "MQTT_Examples";
-        String content      = "Sample Message";
-        int qos             = 0;
-        broker       = "tcp://localhost:1883";
-        clientId     = "MainClient";
+    	String topic = "MQTT_Examples";
+        String content = "Sample Message";
+        int qos = 0;
+        broker = "tcp://localhost:1883";
+        clientId = "MainClient";
         persistence = new MemoryPersistence();
-        cb = new MyMqttCallback();
+        callback = new MyMqttCallback();
         
         logger.info("App start");
 
@@ -65,7 +65,9 @@ public class App {
         try {
 			client = new MqttClient(broker, clientId, persistence);
 			// Set Client Callback functions to custom callback
-	        client.setCallback(cb);
+			
+			logger.info("Client initialized");
+	        client.setCallback(callback);
 
 	        // Define Connection options
 	        MqttConnectOptions options = new MqttConnectOptions();
@@ -74,6 +76,8 @@ public class App {
 	        
 	        // Connect Client to Local Broker
 	        client.connect(options);
+	        
+	        logger.info("Client connected");
 	        
 	        return true;
 		} catch (MqttException e) {
