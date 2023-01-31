@@ -10,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -21,12 +20,7 @@ public class MyMqttCallback implements MqttCallback{
 	@Override
 	public void connectionLost(Throwable cause) {
 		logger.fatal(cause);
-		try {
-			App.client = new MqttClient(App.broker, App.clientId, App.persistence);
-		} catch (MqttException e) {
-			logger.error(e);
-		}
-		
+		App.connectClient();
 	}
 
 	@Override
@@ -36,24 +30,53 @@ public class MyMqttCallback implements MqttCallback{
 			return;
 		}
 		byte[] payload = message.getPayload();
-    	String text = new String(payload, "UTF-8");
-    	logger.info("Subscribed Message: " + text);
+    	logger.debug("Subscribed Message: " + new String(payload, "UTF-8"));
     	
-    	// Save each message as a separate file in temp/MqttData
-    	String dirName = System.getProperty("java.io.tmpdir") + File.separator + "MqttData" + File.separator;
+//    	File file = createMessageFile(topic, message.getId(), ".txt");
+    	File file = createMessageFile(topic, message.getId());
+    	writePayloadToFile(payload, file);
+	}
+	
+	// Creates a binary file with the given id under a dir with the topic name
+	private File createMessageFile(String topic, int id) {
+		return createMessageFile(topic, id, "");
+	}
+	
+	// Creates a file of the given extension type
+	// with the given id in a dir with the given topic
+	// If the dir doesn't exist, it will be created
+	// All files and folders will be created in tmpdir/MqttData
+	// Returns: a file object of the newly created file
+	private File createMessageFile(String topic, int id, String extension) {
+		// Save each message as a separate file in tmpdir/MqttData
+    	String dirName = System.getProperty("java.io.tmpdir") + File.separator + "MqttData";
     	
-    	File topicDir = new File(dirName + topic);
+    	File mqttDataDir = new File(dirName);
+    	
+    	if (!mqttDataDir.exists()) {
+    		mqttDataDir.mkdir();
+    	}
+    	
+    	File topicDir = new File(dirName + File.separator + topic);
     	
     	if (!topicDir.exists()) {
     		topicDir.mkdir();
     	}
     	
-    	File file = new File(topicDir + File.separator + message.getId() + ".txt");
+    	File file = new File(topicDir + File.separator + id + extension);
 
-    	file.createNewFile();
+    	try {
+			file.createNewFile();
+		} catch (IOException e) {
+			logger.error(e);
+		}
     	logger.debug("Message File Created");
-    	
-    	OutputStream os = null;
+    	return file;
+	}
+	
+	// writes the payload into the provided file
+	private void writePayloadToFile(byte[] payload, File file) {
+		OutputStream os = null;
     	try {
     		os = new FileOutputStream(file);
     		os.write(payload, 0, payload.length);
@@ -67,13 +90,7 @@ public class MyMqttCallback implements MqttCallback{
     		}
     	}
     		
-    	logger.debug("Message Bytes dumped into file: " + file.getName());
-    	    	    	
-//    	Files.write(file.toPath(), "hello".getBytes());
-//    	file.setWritable(true);
-//    	if (Files.isWritable(file.toPath())) {
-//    		System.out.println("yes");
-//    	}    	
+    	logger.debug("Message Bytes dumped into file: " + file.getName());	
 	}
 
 	@Override
