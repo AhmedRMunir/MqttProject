@@ -13,25 +13,32 @@ public class App {
 	
 	// Log4j Logger instantiation
 	private static final Logger logger = LogManager.getLogger();
+	static MqttClient client;
+	static MyMqttCallback cb;
+	static String broker;
+	static String clientId;
+	static MemoryPersistence persistence;
+	
 	
     public static void main(String[] args) {     
     	String topic        = "MQTT_Examples";
         String content      = "Sample Message";
         int qos             = 0;
-        String broker       = "tcp://localhost:1883";
-        String clientId     = "MainClient";
-        MemoryPersistence persistence = new MemoryPersistence();
-        MyMqttCallback cb = new MyMqttCallback();
+        broker       = "tcp://localhost:1883";
+        clientId     = "MainClient";
+        persistence = new MemoryPersistence();
+        cb = new MyMqttCallback();
         
         logger.info("hello from App.java");
 
         try {
         	// Create Client
-            MqttClient client = new MqttClient(broker, clientId, persistence);
+            client = new MqttClient(broker, clientId, persistence);
             
             // Set Client Callback functions to custom callback
             client.setCallback(cb);
             
+            // PUT THIS IN A METHOD AND THEN PUT IT IN CONNCETIONLOST
             // Define Connection options
             MqttConnectOptions options = new MqttConnectOptions();
             options.setCleanSession(true);
@@ -62,7 +69,7 @@ public class App {
         	logger.info("Cause: " + e.getCause());
         	logger.info("Exception: " + e);
         	logger.error("Reason " + e.getReasonCode());
-        	logger.trace(e.getStackTrace());
+        	logger.error(e);
         }
     }
 }

@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -19,7 +20,13 @@ public class MyMqttCallback implements MqttCallback{
 
 	@Override
 	public void connectionLost(Throwable cause) {
-		logger.fatal("Connection Lost");
+		logger.fatal(cause);
+		try {
+			App.client = new MqttClient(App.broker, App.clientId, App.persistence);
+		} catch (MqttException e) {
+			logger.error(e);
+		}
+		
 	}
 
 	@Override
@@ -59,11 +66,11 @@ public class MyMqttCallback implements MqttCallback{
     			logger.trace(e.getStackTrace());
     		}
     	}
-    	
+    		
     	logger.debug("Message Bytes dumped into file: " + file.getName());
     	    	    	
 //    	Files.write(file.toPath(), "hello".getBytes());
-//    	file.setWritable(true, false);
+//    	file.setWritable(true);
 //    	if (Files.isWritable(file.toPath())) {
 //    		System.out.println("yes");
 //    	}    	
