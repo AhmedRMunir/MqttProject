@@ -1,0 +1,8 @@
+2023-01-30 16:34:46.461 [main] INFO  com.iointel.mqtt.mqtt_app.App - hello from App.java
+2023-01-30 16:34:46.863 [MQTT Call: MainClient] INFO  com.iointel.mqtt.mqtt_app.MyMqttCallback - hello from messageArrived
+2023-01-30 16:42:32.951 [main] INFO  com.iointel.mqtt.mqtt_app.App - hello from App.java
+2023-01-30 16:42:33.338 [MQTT Call: MainClient] DEBUG com.iointel.mqtt.mqtt_app.MyMqttCallback - Messaged Delivered
+2023-01-30 16:42:33.338 [MQTT Call: MainClient] INFO  com.iointel.mqtt.mqtt_app.MyMqttCallback - Messaged Published: Sample Message
+2023-01-30 16:42:33.339 [MQTT Call: MainClient] INFO  com.iointel.mqtt.mqtt_app.MyMqttCallback - Subscribed Message: Sample Message
+2023-01-30 16:42:33.340 [MQTT Call: MainClient] DEBUG com.iointel.mqtt.mqtt_app.MyMqttCallback - Message File Created
+2023-01-30 16:42:33.341 [MQTT Call: MainClient] DEBUG com.iointel.mqtt.mqtt_app.MyMqttCallback - Message Bytes dumped into file: 0.txt
