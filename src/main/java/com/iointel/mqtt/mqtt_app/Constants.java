@@ -2,7 +2,7 @@ package com.iointel.mqtt.mqtt_app;
 
 import com.iointel.mqtt.mqtt_app.utilities.RandomUtility;
 
-public class Constants {
+public final class Constants {
 
 	public static final class Init {
 		public static final String broker = "tcp://localhost:1883";

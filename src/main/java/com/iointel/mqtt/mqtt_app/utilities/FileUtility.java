@@ -7,7 +7,7 @@ import java.io.IOException;
 import com.iointel.mqtt.mqtt_app.Constants;
 import com.iointel.mqtt.mqtt_app.MqttAppException;
 
-public class FileUtility {
+public final class FileUtility {
 
 	public static File createMqttMessageFile(String topic, int id) throws MqttAppException {
 		return createFileAndDirsInPath(Constants.Init.tempDirPath + File.separator + Constants.Init.messageDirName

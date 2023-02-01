@@ -9,7 +9,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import com.iointel.mqtt.mqtt_app.Constants;
 import com.iointel.mqtt.mqtt_app.MqttAppException;
 
-public class MqttUtility {
+public final class MqttUtility {
 
 	public static MqttClient createClient(String broker, String clientId) throws MqttAppException {
 		MqttClient client;
