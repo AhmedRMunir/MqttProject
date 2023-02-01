@@ -1,0 +1,36 @@
+2023-02-01 10:57:01.166 [main] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - App Start
+2023-02-01 10:57:01.591 [MQTT Call: 50c3b486-443a-449c-a3fa-ab29e06cc88c] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Delivered
+2023-02-01 10:57:01.591 [MQTT Call: 50c3b486-443a-449c-a3fa-ab29e06cc88c] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Published: Sample Message
+2023-02-01 10:57:01.592 [MQTT Call: 50c3b486-443a-449c-a3fa-ab29e06cc88c] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Subscribed Message: Sample Message
+2023-02-01 11:05:58.997 [main] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - App Start
+2023-02-01 11:05:59.409 [MQTT Call: 331ec21b-9190-4744-b5ee-a6c94cdc0fb8] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Delivered
+2023-02-01 11:05:59.410 [MQTT Call: 331ec21b-9190-4744-b5ee-a6c94cdc0fb8] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Published: Sample Message
+2023-02-01 11:05:59.410 [MQTT Call: 331ec21b-9190-4744-b5ee-a6c94cdc0fb8] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Subscribed Message: Sample Message
+2023-02-01 11:06:03.916 [main] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - App Start
+2023-02-01 11:06:04.316 [MQTT Call: c8f0320b-d28c-4051-848c-7c3ea71a08a9] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Delivered
+2023-02-01 11:06:04.316 [MQTT Call: c8f0320b-d28c-4051-848c-7c3ea71a08a9] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Published: Sample Message
+2023-02-01 11:06:04.317 [MQTT Call: c8f0320b-d28c-4051-848c-7c3ea71a08a9] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Subscribed Message: Sample Message
+2023-02-01 11:07:01.129 [main] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - App Start
+2023-02-01 11:07:01.531 [MQTT Call: b4221fee-d854-418c-b6ba-12793798febe] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Delivered
+2023-02-01 11:07:01.532 [MQTT Call: b4221fee-d854-418c-b6ba-12793798febe] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Published: Sample Message
+2023-02-01 11:07:01.533 [MQTT Call: b4221fee-d854-418c-b6ba-12793798febe] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Subscribed Message: Sample Message
+2023-02-01 11:08:24.814 [main] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - App Start
+2023-02-01 11:08:25.203 [MQTT Call: ecc9cf0a-2f07-4396-8888-3051bb6dafb9] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Delivered
+2023-02-01 11:08:25.204 [MQTT Call: ecc9cf0a-2f07-4396-8888-3051bb6dafb9] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Published: Sample Message
+2023-02-01 11:08:25.204 [MQTT Call: ecc9cf0a-2f07-4396-8888-3051bb6dafb9] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Subscribed Message: Sample Message
+2023-02-01 11:08:28.326 [main] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - App Start
+2023-02-01 11:08:28.716 [MQTT Call: c9bcd678-199b-46f4-b665-795b77f2174d] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Delivered
+2023-02-01 11:08:28.717 [MQTT Call: c9bcd678-199b-46f4-b665-795b77f2174d] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Published: Sample Message
+2023-02-01 11:08:28.718 [MQTT Call: c9bcd678-199b-46f4-b665-795b77f2174d] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Subscribed Message: Sample Message
+2023-02-01 11:14:56.769 [main] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - App Start
+2023-02-01 11:14:57.181 [MQTT Call: 7f724f12-d680-4280-8bb0-33c91859e6b5] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Delivered
+2023-02-01 11:14:57.184 [MQTT Call: 7f724f12-d680-4280-8bb0-33c91859e6b5] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Published: Sample Message
+2023-02-01 11:14:57.185 [MQTT Call: 7f724f12-d680-4280-8bb0-33c91859e6b5] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Subscribed Message: Sample Message
+2023-02-01 11:15:47.744 [main] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - App Start
+2023-02-01 11:15:48.162 [MQTT Call: 14132c7d-725b-4837-8421-34738974e085] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Delivered
+2023-02-01 11:15:48.162 [MQTT Call: 14132c7d-725b-4837-8421-34738974e085] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Published: Sample Message
+2023-02-01 11:15:48.163 [MQTT Call: 14132c7d-725b-4837-8421-34738974e085] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Subscribed Message: Sample Message
+2023-02-01 11:26:39.225 [main] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - App Start
+2023-02-01 11:26:39.646 [MQTT Call: V6iNGF+S9BNOgATGeZySz20449M] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Delivered
+2023-02-01 11:26:39.647 [MQTT Call: V6iNGF+S9BNOgATGeZySz20449M] INFO  com.iointel.mqtt.mqtt_app.Constants.Init - Messaged Published: Sample Message
+2023-02-01 11:26:39.647 [MQTT Call: V6iNGF+S9BNOgATGeZySz20449M] DEBUG com.iointel.mqtt.mqtt_app.Constants.Init - Subscribed Message: Sample Message

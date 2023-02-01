@@ -24,8 +24,5 @@ public class App {
 //			MqttUtility.closeClient(client);
 			CloseUtility.close(client);
 		}
-
-//		System.out.println(RandomUtility.generateRandomString());
-//		System.out.println(RandomUtility.generateRandomStringThreadSafe());
 	}
 }
