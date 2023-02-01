@@ -41,7 +41,7 @@ public class MyMqttCallback implements MqttCallback {
 		} catch (UnsupportedEncodingException e) {
 			throw new MqttAppException(Constants.Exception.Util.UnsupportedEncoding);
 		}
-		File file = FileUtility.createFileAndDir(topic, message.getId());
+		File file = FileUtility.createMqttMessageFile(topic, message.getId());
 		FileUtility.writePayloadToFile(message.getPayload(), file);
 	}
 

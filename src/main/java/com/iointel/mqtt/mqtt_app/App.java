@@ -15,7 +15,8 @@ public class App {
 			client = MqttUtility.createClient(Constants.Init.broker, Constants.Init.clientId, Cache.persistence);
 			MqttUtility.connectClient(client, Cache.callback);
 			MqttUtility.subscribeTopic(client, Constants.Init.topic);
-			MqttMessage message = MqttUtility.createMessage("Sample Message", Constants.Init.qos);
+			String content = "Sample Message";
+			MqttMessage message = MqttUtility.createMessage(content, Constants.Init.qos);
 			MqttUtility.publishMessage(client, Constants.Init.topic, message);
 		} catch (MqttAppException e) {
 			Constants.Init.logger.error(e);

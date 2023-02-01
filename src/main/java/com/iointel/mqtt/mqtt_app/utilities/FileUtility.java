@@ -9,23 +9,26 @@ import com.iointel.mqtt.mqtt_app.MqttAppException;
 
 public class FileUtility {
 
-	public static File createFileAndDir(String topic, int id) throws MqttAppException {
-		return createFileAndDir(topic, id, "");
+	public static File createMqttMessageFile(String topic, int id) throws MqttAppException {
+		return createFileAndDirsInPath(Constants.Init.tempDirPath + File.separator + Constants.Init.messageDirName
+				+ File.separator + topic + File.separator + id);
 	}
 
-	// Make a recurring createDir method
-	public static File createFileAndDir(String topic, int id, String extension) throws MqttAppException {
-		String dirName = System.getProperty("java.io.tmpdir") + File.separator + "MqttData";
-		createDir(dirName);
-		dirName += File.separator + topic;
-		createDir(dirName);
-		File file = new File(dirName + File.separator + id + extension);
-		try {
-			file.createNewFile();
-		} catch (IOException e) {
-			throw new MqttAppException(Constants.Exception.Util.FileCreate);
+	public static File createFileAndDirsInTempDir(String path) throws MqttAppException {
+		return createFileAndDirsInPath(Constants.Init.tempDirPath + File.separator + path);
+	}
+
+	public static File createFileAndDirsInPath(String filePath) throws MqttAppException {
+		File file = new File(filePath);
+		createDirsInPath(file);
+		return createFile(filePath);
+	}
+
+	public static void createDirsInPath(File targetFile) throws MqttAppException {
+		File parent = targetFile.getParentFile();
+		if (parent != null && !parent.exists() && !parent.mkdirs()) {
+			throw new MqttAppException(Constants.Exception.Util.DirCreate);
 		}
-		return file;
 	}
 
 	public static File createDir(String dirName) {
@@ -34,6 +37,16 @@ public class FileUtility {
 			dir.mkdir();
 		}
 		return dir;
+	}
+
+	public static File createFile(String filePath) throws MqttAppException {
+		File file = new File(filePath);
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			throw new MqttAppException(Constants.Exception.Util.FileCreate);
+		}
+		return file;
 	}
 
 	public static void writePayloadToFile(byte[] payload, File file) throws MqttAppException {

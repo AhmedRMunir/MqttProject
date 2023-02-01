@@ -1,5 +1,7 @@
 package com.iointel.mqtt.mqtt_app;
 
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,6 +16,8 @@ public class Constants {
 		public static final String clientId = RandomUtility.generateRandomStringThreadSafe();
 		public static final String topic = "MQTT_Examples";
 		public static final int qos = 0;
+		public static final String tempDirPath = System.getProperty("java.io.tmpdir");
+		public static final String messageDirName = "MqttData";
 	}
 
 	public static final class Exception {
@@ -31,6 +35,7 @@ public class Constants {
 			public static final String FileCreate = "File creation failed!";
 			public static final String OutputStream = "File Outputstream Error!";
 			public static final String UnsupportedEncoding = "Encoding Unsupported Error!";
+			public static final String DirCreate = "Directory Creation Error!";
 		}
 	}
 
