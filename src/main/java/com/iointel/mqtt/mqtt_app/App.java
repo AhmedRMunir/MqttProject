@@ -9,7 +9,7 @@ import com.iointel.mqtt.mqtt_app.utilities.CloseUtility;
 import com.iointel.mqtt.mqtt_app.utilities.MqttUtility;
 
 public class App {
-	
+
 	private static String content = "Sample Message";
 	private static final Logger logger = LogManager.getLogger(CloseUtility.class);
 
@@ -19,7 +19,7 @@ public class App {
 			client = MqttUtility.createClient(Constants.Init.broker, Constants.Init.clientId);
 			MqttUtility.connectClient(client, Cache.callback);
 			MqttUtility.subscribeTopic(client, Constants.Init.topic);
-			
+
 			MqttMessage message = MqttUtility.createMessage(content, Constants.Init.qos);
 			MqttUtility.publishMessage(client, Constants.Init.topic, message);
 			MqttUtility.disconnectClient(client);

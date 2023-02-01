@@ -2,7 +2,6 @@ package com.iointel.mqtt.mqtt_app.utilities;
 
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttClientPersistence;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -12,11 +11,10 @@ import com.iointel.mqtt.mqtt_app.MqttAppException;
 
 public class MqttUtility {
 
-	public static MqttClient createClient(String broker, String clientId, MqttClientPersistence persistence)
-			throws MqttAppException {
+	public static MqttClient createClient(String broker, String clientId) throws MqttAppException {
 		MqttClient client;
 		try {
-			client = new MqttClient(broker, clientId, persistence);
+			client = new MqttClient(broker, clientId);
 		} catch (MqttException e) {
 			throw new MqttAppException(Constants.Exception.Mqtt.ClientCreate);
 		}

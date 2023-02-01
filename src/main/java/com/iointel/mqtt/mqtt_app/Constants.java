@@ -1,19 +1,12 @@
 package com.iointel.mqtt.mqtt_app;
 
-import java.io.File;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.iointel.mqtt.mqtt_app.utilities.RandomUtility;
 
 public class Constants {
 
 	public static final class Init {
-		public static final Logger logger = LogManager.getLogger();
 		public static final String broker = "tcp://localhost:1883";
-//		public static final String clientId = UUID.randomUUID().toString();
-		public static final String clientId = RandomUtility.generateRandomStringThreadSafe();
+		public static final String clientId = RandomUtility.generateUUID();
 		public static final String topic = "MQTT_Examples";
 		public static final int qos = 0;
 		public static final String tempDirPath = System.getProperty("java.io.tmpdir");

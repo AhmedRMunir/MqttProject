@@ -8,13 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 
-import com.iointel.mqtt.mqtt_app.Constants;
-
 public class CloseUtility {
-	private static final Logger logger = Constants.Init.logger;
+	private static final Logger logger = LogManager.getLogger(CloseUtility.class);
 
 	public static void close(Object object) {
 		if (object == null) {
@@ -36,19 +35,10 @@ public class CloseUtility {
 			} else if (object instanceof OutputStream) {
 				((OutputStream) object).close();
 			} else if (object instanceof MqttClient) {
-
+				((MqttClient) object).close();
 			}
 		} catch (Exception e) {
 			logger.error("Exception occured during object close", e);
 		}
 	}
-
-	public static void sleep(long millis) {
-		try {
-			Thread.sleep(millis);
-		} catch (Exception e) {
-			logger.error("Exception occured during thread sleep", e);
-		}
-	}
-
 }
