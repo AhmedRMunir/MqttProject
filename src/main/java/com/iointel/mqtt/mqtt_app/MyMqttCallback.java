@@ -22,22 +22,26 @@ public class MyMqttCallback implements MqttCallback {
 		logger.error(cause);
 		MqttClient client;
 		try {
-			client = MqttUtility.createClient(Constants.Init.broker, Constants.Init.clientId,
-					Constants.Init.persistence);
-			MqttUtility.connectClient(client, Constants.Init.callback);
+			client = MqttUtility.createClient(Constants.Init.broker, Constants.Init.clientId, Cache.persistence);
+			MqttUtility.connectClient(client, Cache.callback);
 		} catch (MqttAppException e) {
+			// Deal with this
 			logger.error(e);
 		}
 	}
 
 	@Override
-	public void messageArrived(String topic, MqttMessage message) throws Exception {
+	public void messageArrived(String topic, MqttMessage message) throws MqttAppException {
 		if (message == null || message.getPayload() == null) {
 			logger.info("Null Message Received");
 			return;
 		}
-		logger.debug("Subscribed Message: " + new String(message.getPayload(), "UTF-8"));
-		File file = FileUtility.createMessageFile(topic, message.getId());
+		try {
+			logger.debug("Subscribed Message: " + new String(message.getPayload(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			throw new MqttAppException(Constants.Exception.Util.UnsupportedEncoding);
+		}
+		File file = FileUtility.createFileAndDir(topic, message.getId());
 		FileUtility.writePayloadToFile(message.getPayload(), file);
 	}
 
@@ -51,6 +55,7 @@ public class MyMqttCallback implements MqttCallback {
 			String text = new String(payload, "UTF-8");
 			logger.info("Messaged Published: " + text);
 		} catch (MqttException e) {
+			// What to do here?
 			logger.trace(e);
 		} catch (UnsupportedEncodingException e) {
 			logger.trace(e);

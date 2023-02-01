@@ -1,23 +1,19 @@
 package com.iointel.mqtt.mqtt_app;
 
-import java.util.UUID;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.paho.client.mqttv3.MqttClientPersistence;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+
+import com.iointel.mqtt.mqtt_app.utilities.RandomUtility;
 
 public class Constants {
 
 	public static final class Init {
 		public static final Logger logger = LogManager.getLogger();
-		public static MyMqttCallback callback = new MyMqttCallback();
-		public static MqttClientPersistence persistence = new MemoryPersistence();
-		public static String broker = "tcp://localhost:1883";
-		public static String clientId = UUID.randomUUID().toString();
-		public static String topic = "MQTT_Examples";
-		public static int qos = 0;
-
+		public static final String broker = "tcp://localhost:1883";
+//		public static final String clientId = UUID.randomUUID().toString();
+		public static final String clientId = RandomUtility.generateRandomStringThreadSafe();
+		public static final String topic = "MQTT_Examples";
+		public static final int qos = 0;
 	}
 
 	public static final class Exception {
@@ -29,6 +25,12 @@ public class Constants {
 			public static final String ClientDisconnect = "Client disconnect failed!";
 			public static final String ClientClose = "Client close failed!";
 			public static final String ClientPublish = "Client publish failed!";
+		}
+
+		public static final class Util {
+			public static final String FileCreate = "File creation failed!";
+			public static final String OutputStream = "File Outputstream Error!";
+			public static final String UnsupportedEncoding = "Encoding Unsupported Error!";
 		}
 	}
 
