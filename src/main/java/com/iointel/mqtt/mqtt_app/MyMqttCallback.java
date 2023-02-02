@@ -34,10 +34,13 @@ public class MyMqttCallback implements MqttCallback {
 		if (message == null || message.getPayload() == null) {
 			logger.info("Null Message Received");
 		} else {
-			File file = FileUtility.createMqttMessageFile(topic, message.getId());
-			FileUtility.writePayloadToFile(message.getPayload(), file);
+			saveMessageToFile(topic, message);
 		}
-
+	}
+	
+	private void saveMessageToFile(String topic, MqttMessage message) throws MqttAppException {
+		File file = FileUtility.createMqttMessageFile(topic, message.getId());
+		FileUtility.writePayloadToFile(message.getPayload(), file);
 	}
 
 	@Override
