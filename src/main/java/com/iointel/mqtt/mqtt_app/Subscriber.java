@@ -22,7 +22,7 @@ public class Subscriber {
 		}
 //
 		while (true) {
-			
+
 		}
 
 		// Add Shutdown Hook

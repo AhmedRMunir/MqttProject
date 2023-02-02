@@ -14,7 +14,7 @@ public class App {
 	private static final Logger logger = LogManager.getLogger(CloseUtility.class);
 
 	public static void main(String[] args) throws MqttAppException {
-		
+
 		MqttClient client;
 		try {
 			client = MqttUtility.createClient(Constants.Init.broker, Constants.Init.clientId);

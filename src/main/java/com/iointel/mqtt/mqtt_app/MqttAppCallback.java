@@ -46,11 +46,11 @@ public class MqttAppCallback implements MqttCallback {
 		File file = FileUtility.createMqttMessageFile(topic, currDateAndTime() + ".txt");
 		FileUtility.writePayloadToFile(message.getPayload(), file);
 	}
-	
+
 	private String currDateAndTime() {
 		Date date = Calendar.getInstance().getTime();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd_hh-mm-ss");
-		return dateFormat.format(date);		
+		return dateFormat.format(date);
 	}
 
 	@Override
