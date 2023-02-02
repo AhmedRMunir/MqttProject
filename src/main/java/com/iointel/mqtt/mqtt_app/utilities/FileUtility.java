@@ -9,9 +9,9 @@ import com.iointel.mqtt.mqtt_app.MqttAppException;
 
 public final class FileUtility {
 
-	public static File createMqttMessageFile(String topic, int id) throws MqttAppException {
+	public static File createMqttMessageFile(String topic, String fileName) throws MqttAppException {
 		return createFileAndDirsInPath(Constants.Init.tempDirPath + File.separator + Constants.Init.messageDirName
-				+ File.separator + topic + File.separator + id);
+				+ File.separator + topic + File.separator + fileName);
 	}
 
 	public static File createFileAndDirsInTempDir(String path) throws MqttAppException {
