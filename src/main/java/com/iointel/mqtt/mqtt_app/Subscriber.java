@@ -3,7 +3,6 @@ package com.iointel.mqtt.mqtt_app;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import com.iointel.mqtt.mqtt_app.utilities.CloseUtility;
 import com.iointel.mqtt.mqtt_app.utilities.MqttUtility;
@@ -25,11 +24,11 @@ public class Subscriber {
 			logger.error(e);
 		}
 	}
-	
-	private static void send100Messages(MqttClient client) throws MqttAppException {
-		for (int i = 0; i < 100; i++) {
-			MqttMessage m = MqttUtility.createMessage("hello from" + i, 0);
-			MqttUtility.publishMessage(client, Constants.Init.topic, m);
-		}
-	}
+
+//	private static void send100Messages(MqttClient client) throws MqttAppException {
+//		for (int i = 0; i < 100; i++) {
+//			MqttMessage m = MqttUtility.createMessage("hello from" + i, 0);
+//			MqttUtility.publishMessage(client, Constants.Init.topic, m);
+//		}
+//	}
 }
