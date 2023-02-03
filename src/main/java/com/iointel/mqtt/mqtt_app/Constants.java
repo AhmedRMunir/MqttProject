@@ -11,6 +11,7 @@ public final class Constants {
 		public static final int qos = 0;
 		public static final String tempDirPath = System.getProperty("java.io.tmpdir");
 		public static final String messageDirName = "MqttData";
+		public static final int NumThreads = 2;
 	}
 
 	public static final class Exception {

@@ -3,6 +3,7 @@ package com.iointel.mqtt.mqtt_app;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import com.iointel.mqtt.mqtt_app.utilities.CloseUtility;
 import com.iointel.mqtt.mqtt_app.utilities.MqttUtility;
@@ -17,18 +18,18 @@ public class Subscriber {
 			client = MqttUtility.createClient(Constants.Init.broker, Constants.Init.clientId);
 			MqttUtility.connectClient(client, Cache.callback);
 			MqttUtility.subscribeTopic(client, Constants.Init.topic);
+			Thread shutdownHook = new Thread(() -> CloseUtility.MqttClientShutdownHook(client));
+			Runtime.getRuntime().addShutdownHook(shutdownHook);
+//			send100Messages(client);
 		} catch (MqttAppException e) {
 			logger.error(e);
 		}
-//
-		while (true) {
-
-		}
-
-		// Add Shutdown Hook
-//		MqttUtility.disconnectClient(client);
-//		CloseUtility.close(client);
-
 	}
-
+	
+	private static void send100Messages(MqttClient client) throws MqttAppException {
+		for (int i = 0; i < 100; i++) {
+			MqttMessage m = MqttUtility.createMessage("hello from" + i, 0);
+			MqttUtility.publishMessage(client, Constants.Init.topic, m);
+		}
+	}
 }

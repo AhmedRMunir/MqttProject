@@ -12,6 +12,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 
+import com.iointel.mqtt.mqtt_app.Constants;
+import com.iointel.mqtt.mqtt_app.MqttAppException;
+
 public final class CloseUtility {
 	private static final Logger logger = LogManager.getLogger(CloseUtility.class);
 
@@ -40,5 +43,14 @@ public final class CloseUtility {
 		} catch (Exception e) {
 			logger.error("Exception occured during object close", e);
 		}
+	}
+
+	public static void MqttClientShutdownHook(MqttClient client) {
+		try {
+			MqttUtility.disconnectClient(client);
+		} catch (MqttAppException e) {
+			logger.error(Constants.Exception.Mqtt.ClientDisconnect, e);
+		}
+		CloseUtility.close(client);
 	}
 }

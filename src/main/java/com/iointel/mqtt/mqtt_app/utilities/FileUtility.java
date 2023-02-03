@@ -4,10 +4,19 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+
 import com.iointel.mqtt.mqtt_app.Constants;
 import com.iointel.mqtt.mqtt_app.MqttAppException;
 
 public final class FileUtility {
+
+	public static File saveMessageToFile(String topic, MqttMessage message) throws MqttAppException {
+		File file = FileUtility.createMqttMessageFile(topic,
+				GeneralUtility.currDateAndTime() + RandomUtility.generateUUID() + ".txt");
+		FileUtility.writePayloadToFile(message.getPayload(), file);
+		return file;
+	}
 
 	public static File createMqttMessageFile(String topic, String fileName) throws MqttAppException {
 		return createFileAndDirsInPath(Constants.Init.tempDirPath + File.separator + Constants.Init.messageDirName
