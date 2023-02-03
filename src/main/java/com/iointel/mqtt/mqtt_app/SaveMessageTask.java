@@ -24,13 +24,10 @@ public class SaveMessageTask implements Runnable {
 			Thread.sleep(1000);
 		} catch (MqttAppException e) {
 			logger.error(e);
-		}
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		String s = new String(message.getPayload(), StandardCharsets.US_ASCII);
-//		System.out.println(s);
 	}
 
 }

@@ -30,6 +30,8 @@ public final class Constants {
 			public static final String OutputStream = "File Outputstream Error!";
 			public static final String UnsupportedEncoding = "Encoding Unsupported Error!";
 			public static final String DirCreate = "Directory Creation Error!";
+			public static final String ExecutorServiceShutdown = "ExecutorService did not terminate!";
+			public static final String ThreadInterrupted = "Thread Interrupted!";
 		}
 	}
 

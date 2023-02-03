@@ -17,7 +17,12 @@ public class Subscriber {
 			client = MqttUtility.createClient(Constants.Init.broker, Constants.Init.clientId);
 			MqttUtility.connectClient(client, Cache.callback);
 			MqttUtility.subscribeTopic(client, Constants.Init.topic);
-			Thread shutdownHook = new Thread(() -> CloseUtility.MqttClientShutdownHook(client));
+			Thread mainThread = Thread.currentThread();
+			Thread shutdownHook = new Thread(() -> {
+				CloseUtility.joinThread(mainThread);
+				CloseUtility.mqttClientShutdownHook(client);
+				CloseUtility.executorServiceShutdownHook(Cache.executorService);
+			});
 			Runtime.getRuntime().addShutdownHook(shutdownHook);
 //			send100Messages(client);
 		} catch (MqttAppException e) {

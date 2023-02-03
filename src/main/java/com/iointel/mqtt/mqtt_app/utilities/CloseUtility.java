@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,12 +47,35 @@ public final class CloseUtility {
 		}
 	}
 
-	public static void MqttClientShutdownHook(MqttClient client) {
+	public static void mqttClientShutdownHook(MqttClient client) {
 		try {
 			MqttUtility.disconnectClient(client);
 		} catch (MqttAppException e) {
 			logger.error(Constants.Exception.Mqtt.ClientDisconnect, e);
 		}
 		CloseUtility.close(client);
+	}
+
+	public static void executorServiceShutdownHook(ExecutorService pool) {
+		pool.shutdown();
+		try {
+			if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+				pool.shutdownNow();
+				if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+					logger.error(Constants.Exception.Util.ExecutorServiceShutdown);
+				}
+			}
+		} catch (InterruptedException e) {
+			pool.shutdownNow();
+			Thread.currentThread().interrupt();
+		}
+	}
+
+	public static void joinThread(Thread thread) {
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			logger.error(Constants.Exception.Util.ThreadInterrupted, e);
+		}
 	}
 }
