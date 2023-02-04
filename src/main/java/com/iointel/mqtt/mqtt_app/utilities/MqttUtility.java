@@ -11,12 +11,16 @@ import com.iointel.mqtt.mqtt_app.MqttAppException;
 
 public final class MqttUtility {
 
+	private MqttUtility() {
+		throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+	}
+
 	public static MqttClient createClient(String broker, String clientId) throws MqttAppException {
 		MqttClient client;
 		try {
 			client = new MqttClient(broker, clientId);
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exception.Mqtt.ClientCreate);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CREATE);
 		}
 		return client;
 	}
@@ -27,7 +31,7 @@ public final class MqttUtility {
 			MqttConnectOptions options = createOptions();
 			client.connect(options);
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exception.Mqtt.ClientConnect);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CONNECT);
 		}
 	}
 
@@ -35,7 +39,7 @@ public final class MqttUtility {
 		try {
 			client.close();
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exception.Mqtt.ClientClose);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CLOSE);
 		}
 	}
 
@@ -46,7 +50,7 @@ public final class MqttUtility {
 		try {
 			client.disconnect();
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exception.Mqtt.ClientDisconnect);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_DISCONNECT);
 		}
 	}
 
@@ -54,7 +58,7 @@ public final class MqttUtility {
 		try {
 			client.subscribe(topic);
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exception.Mqtt.ClientSubscribe);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_SUBSCRIBE);
 		}
 	}
 
@@ -62,7 +66,7 @@ public final class MqttUtility {
 		try {
 			client.publish(topic, message);
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exception.Mqtt.ClientPublish);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_PUBLISH);
 		}
 	}
 

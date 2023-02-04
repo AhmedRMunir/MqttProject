@@ -20,27 +20,31 @@ import com.iointel.mqtt.mqtt_app.MqttAppException;
 public final class CloseUtility {
 	private static final Logger logger = LogManager.getLogger(CloseUtility.class);
 
+	private CloseUtility() {
+		throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+	}
+
 	public static void close(Object object) {
 		if (object == null) {
 			return;
 		}
 		try {
-			if (object instanceof Connection) {
-				((Connection) object).close();
-			} else if (object instanceof ResultSet) {
-				((ResultSet) object).close();
-			} else if (object instanceof PreparedStatement) {
-				((PreparedStatement) object).close();
-			} else if (object instanceof Statement) {
-				((Statement) object).close();
-			} else if (object instanceof CallableStatement) {
-				((CallableStatement) object).close();
-			} else if (object instanceof Closeable) {
-				((Closeable) object).close();
-			} else if (object instanceof OutputStream) {
-				((OutputStream) object).close();
-			} else if (object instanceof MqttClient) {
-				((MqttClient) object).close();
+			if (object instanceof Connection connection) {
+				connection.close();
+			} else if (object instanceof ResultSet resultSet) {
+				resultSet.close();
+			} else if (object instanceof PreparedStatement preparedStatement) {
+				preparedStatement.close();
+			} else if (object instanceof Statement statement) {
+				statement.close();
+			} else if (object instanceof CallableStatement callableStatement) {
+				callableStatement.close();
+			} else if (object instanceof Closeable closeable) {
+				closeable.close();
+			} else if (object instanceof OutputStream outputStream) {
+				outputStream.close();
+			} else if (object instanceof MqttClient mqttClient) {
+				mqttClient.close();
 			}
 		} catch (Exception e) {
 			logger.error("Exception occured during object close", e);
@@ -51,7 +55,7 @@ public final class CloseUtility {
 		try {
 			MqttUtility.disconnectClient(client);
 		} catch (MqttAppException e) {
-			logger.error(Constants.Exception.Mqtt.ClientDisconnect, e);
+			logger.error(Constants.Exceptions.Mqtt.CLIENT_DISCONNECT, e);
 		}
 		CloseUtility.close(client);
 	}
@@ -62,7 +66,7 @@ public final class CloseUtility {
 			if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
 				pool.shutdownNow();
 				if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
-					logger.error(Constants.Exception.Util.ExecutorServiceShutdown);
+					logger.error(Constants.Exceptions.Util.EXECUTORSERVICE_SHUTDOWN);
 				}
 			}
 		} catch (InterruptedException e) {
@@ -71,11 +75,13 @@ public final class CloseUtility {
 		}
 	}
 
-	public static void joinThread(Thread thread) {
+	public static void joinThread(Thread thread) throws MqttAppException {
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
-			logger.error(Constants.Exception.Util.ThreadInterrupted, e);
+			logger.error(Constants.Exceptions.Util.THREAD_INTERRUPTED, e);
+			thread.interrupt();
+			throw new MqttAppException(Constants.Exceptions.Util.THREAD_INTERRUPTED);
 		}
 	}
 }

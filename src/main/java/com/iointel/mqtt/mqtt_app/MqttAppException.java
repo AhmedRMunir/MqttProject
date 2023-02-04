@@ -1,6 +1,11 @@
 package com.iointel.mqtt.mqtt_app;
 
 public class MqttAppException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public MqttAppException() {
 		super();
 	}

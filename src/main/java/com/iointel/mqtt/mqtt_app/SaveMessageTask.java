@@ -21,12 +21,8 @@ public class SaveMessageTask implements Runnable {
 	public void run() {
 		try {
 			FileUtility.saveMessageToFile(topic, message);
-			Thread.sleep(1000);
 		} catch (MqttAppException e) {
 			logger.error(e);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 

@@ -11,22 +11,21 @@ import com.iointel.mqtt.mqtt_app.utilities.MqttUtility;
 public class App {
 
 	private static String content = "Sample Message";
-	private static final Logger logger = LogManager.getLogger(CloseUtility.class);
+	private static final Logger logger = LogManager.getLogger(App.class);
 
 	public static void main(String[] args) throws MqttAppException {
 
 		MqttClient client;
 		try {
-			client = MqttUtility.createClient(Constants.Init.broker, Constants.Init.clientId);
+			client = MqttUtility.createClient(Constants.Init.BROKER, Constants.Init.CLIENT_ID);
 			MqttUtility.connectClient(client, Cache.callback);
-			MqttUtility.subscribeTopic(client, Constants.Init.topic);
-			MqttMessage message = MqttUtility.createMessage(content, Constants.Init.qos);
-			MqttUtility.publishMessage(client, Constants.Init.topic, message);
+			MqttUtility.subscribeTopic(client, Constants.Init.TOPIC);
+			MqttMessage message = MqttUtility.createMessage(content, Constants.Init.QOS);
+			MqttUtility.publishMessage(client, Constants.Init.TOPIC, message);
 			MqttUtility.disconnectClient(client);
 			CloseUtility.close(client);
 		} catch (MqttAppException e) {
 			logger.error(e);
-		} finally {
 		}
 	}
 }
