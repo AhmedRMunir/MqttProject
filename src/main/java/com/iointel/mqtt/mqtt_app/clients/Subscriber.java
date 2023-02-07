@@ -7,6 +7,7 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 
 import com.iointel.mqtt.mqtt_app.Cache;
 import com.iointel.mqtt.mqtt_app.Constants;
+import com.iointel.mqtt.mqtt_app.MqttAppCallback;
 import com.iointel.mqtt.mqtt_app.MqttAppException;
 import com.iointel.mqtt.mqtt_app.utilities.MqttUtility;
 import com.iointel.mqtt.mqtt_app.utilities.ShutdownUtility;
@@ -19,8 +20,7 @@ public class Subscriber {
 		try {
 			MqttAsyncClient client = MqttUtility.createClient(Constants.Init.BROKER,
 					MqttAsyncClient.generateClientId());
-			// TODO: maybe create new Callback and pass immediately?
-			MqttUtility.setCallbackClient(client, Cache.callback);
+			MqttUtility.setCallbackClient(client, new MqttAppCallback());
 			MqttConnectOptions options = MqttUtility.createOptions(Constants.Init.AUTOMATIC_RECONNECT, Constants.Init.CLEAN_SESSION);
 			MqttUtility.connectClient(client, options);
 			MqttUtility.subscribeTopic(client, Constants.Init.TOPIC, Constants.Init.QOS);

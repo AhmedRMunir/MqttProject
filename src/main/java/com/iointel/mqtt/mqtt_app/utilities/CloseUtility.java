@@ -10,6 +10,7 @@ import java.sql.Statement;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 
 public final class CloseUtility {
@@ -40,6 +41,8 @@ public final class CloseUtility {
 				outputStream.close();
 			} else if (object instanceof MqttClient mqttClient) {
 				mqttClient.close();
+			} else if (object instanceof MqttAsyncClient mqttAsyncClient) {
+				mqttAsyncClient.close();
 			}
 		} catch (Exception e) {
 			logger.error("Exception occured during object close", e);

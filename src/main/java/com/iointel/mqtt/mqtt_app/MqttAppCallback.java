@@ -21,7 +21,7 @@ public class MqttAppCallback implements MqttCallback {
 		try {
 			MqttAsyncClient client = MqttUtility.createClient(Constants.Init.BROKER,
 					MqttAsyncClient.generateClientId());
-			MqttUtility.setCallbackClient(client, Cache.callback);
+			MqttUtility.setCallbackClient(client, new MqttAppCallback());
 			MqttConnectOptions options = MqttUtility.createOptions(Constants.Init.AUTOMATIC_RECONNECT,
 					Constants.Init.CLEAN_SESSION);
 			MqttUtility.connectClient(client, options);
