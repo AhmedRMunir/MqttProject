@@ -1,7 +1,7 @@
 package com.iointel.mqtt.mqtt_app.utilities;
 
+import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -15,27 +15,29 @@ public final class MqttUtility {
 		throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
 	}
 
-	public static MqttClient createClient(String broker, String clientId) throws MqttAppException {
-		MqttClient client;
+	public static MqttAsyncClient createClient(String broker, String clientId) throws MqttAppException {
+		MqttAsyncClient client;
 		try {
-			client = new MqttClient(broker, clientId);
+			client = new MqttAsyncClient(broker, clientId);
 		} catch (MqttException e) {
 			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CREATE);
 		}
 		return client;
 	}
 
-	public static void connectClient(MqttClient client, MqttCallback callback) throws MqttAppException {
+	public static void connectClient(MqttAsyncClient client, MqttConnectOptions options) throws MqttAppException {
 		try {
-			client.setCallback(callback);
-			MqttConnectOptions options = createOptions();
-			client.connect(options);
+			client.connect(options).waitForCompletion();
 		} catch (MqttException e) {
 			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CONNECT);
 		}
 	}
 
-	public static void closeClient(MqttClient client) throws MqttAppException {
+	public static void setCallbackClient(MqttAsyncClient client, MqttCallback callback) {
+		client.setCallback(callback);
+	}
+
+	public static void closeClient(MqttAsyncClient client) throws MqttAppException {
 		try {
 			client.close();
 		} catch (MqttException e) {
@@ -43,7 +45,7 @@ public final class MqttUtility {
 		}
 	}
 
-	public static void disconnectClient(MqttClient client) throws MqttAppException {
+	public static void disconnectClient(MqttAsyncClient client) throws MqttAppException {
 		if (client == null || !client.isConnected()) {
 			return;
 		}
@@ -54,19 +56,39 @@ public final class MqttUtility {
 		}
 	}
 
-	public static void subscribeTopic(MqttClient client, String topic) throws MqttAppException {
+	public static void subscribeTopicArray(MqttAsyncClient client, String[] topics, int[] qos) throws MqttAppException {
 		try {
-			client.subscribe(topic);
+			client.subscribe(topics, qos);
 		} catch (MqttException e) {
 			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_SUBSCRIBE);
 		}
 	}
 
-	public static void publishMessage(MqttClient client, String topic, MqttMessage message) throws MqttAppException {
+	public static void subscribeTopic(MqttAsyncClient client, String topic, int qos) throws MqttAppException {
+		try {
+			client.subscribe(topic, qos);
+		} catch (MqttException e) {
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_SUBSCRIBE);
+		}
+	}
+
+	public static void publishMessage(MqttAsyncClient client, String topic, MqttMessage message)
+			throws MqttAppException {
 		try {
 			client.publish(topic, message);
 		} catch (MqttException e) {
 			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_PUBLISH);
+		}
+	}
+
+	public static void publish100Messages(MqttAsyncClient client) throws MqttAppException {
+		for (int i = 0; i < 100; i++) {
+			MqttMessage msg = MqttUtility.createMessage("hello from " + i, Constants.Init.QOS);
+			try {
+				client.publish(Constants.Init.TOPIC, msg);
+			} catch (MqttException e) {
+				throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_PUBLISH);
+			}
 		}
 	}
 
@@ -76,10 +98,10 @@ public final class MqttUtility {
 		return message;
 	}
 
-	private static MqttConnectOptions createOptions() {
+	public static MqttConnectOptions createOptions(boolean automaticReconnect, boolean cleanSession) {
 		MqttConnectOptions options = new MqttConnectOptions();
-		options.setCleanSession(true);
-		options.setAutomaticReconnect(true);
+		options.setCleanSession(cleanSession);
+		options.setAutomaticReconnect(automaticReconnect);
 		return options;
 	}
 }

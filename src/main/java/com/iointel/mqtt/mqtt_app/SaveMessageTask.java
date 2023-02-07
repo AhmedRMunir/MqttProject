@@ -21,7 +21,7 @@ public class SaveMessageTask implements Runnable {
 	public void run() {
 		logger.info("logging message");
 		try {
-			FileUtility.saveMessageToFile(topic, message);
+			FileUtility.saveMessageToFile(topic, message, Constants.Init.FILE_EXTENSION);
 		} catch (MqttAppException e) {
 			logger.error(e);
 		}

@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 
 import com.iointel.mqtt.mqtt_app.Constants;
 import com.iointel.mqtt.mqtt_app.MqttAppException;
@@ -18,28 +18,34 @@ public class ShutdownUtility {
 		throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
 	}
 
-	public static void mqttClientShutdownHook(MqttClient client) {
-		try {
-			MqttUtility.disconnectClient(client);
-		} catch (MqttAppException e) {
-			logger.error(Constants.Exceptions.Mqtt.CLIENT_DISCONNECT, e);
-		}
-		CloseUtility.close(client);
+	public static void addMqttClientShutdownHook(MqttAsyncClient client) {
+		Thread thread = new Thread(() -> {
+			try {
+				MqttUtility.disconnectClient(client);
+			} catch (MqttAppException e) {
+				logger.error(Constants.Exceptions.Mqtt.CLIENT_DISCONNECT, e);
+			}
+			CloseUtility.close(client);
+		});
+		Runtime.getRuntime().addShutdownHook(thread);
 	}
 
-	public static void executorServiceShutdownHook(ExecutorService pool) {
-		pool.shutdown();
-		try {
-			if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
-				pool.shutdownNow();
+	public static void addExecutorServiceShutdownHook(ExecutorService pool) {
+		Thread thread = new Thread(() -> {
+			pool.shutdown();
+			try {
 				if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
-					logger.error(Constants.Exceptions.Util.EXECUTORSERVICE_SHUTDOWN);
+					pool.shutdownNow();
+					if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+						logger.error(Constants.Exceptions.Util.EXECUTORSERVICE_SHUTDOWN);
+					}
 				}
+			} catch (InterruptedException e) {
+				pool.shutdownNow();
+				Thread.currentThread().interrupt();
 			}
-		} catch (InterruptedException e) {
-			pool.shutdownNow();
-			Thread.currentThread().interrupt();
-		}
+		});
+		Runtime.getRuntime().addShutdownHook(thread);
 	}
 
 	public static void joinThread(Thread thread) throws MqttAppException {

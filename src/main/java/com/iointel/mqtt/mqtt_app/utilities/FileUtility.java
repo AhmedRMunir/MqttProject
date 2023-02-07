@@ -15,8 +15,12 @@ public final class FileUtility {
 	}
 
 	public static File saveMessageToFile(String topic, MqttMessage message) throws MqttAppException {
+		return saveMessageToFile(topic, message, "");
+	}
+
+	public static File saveMessageToFile(String topic, MqttMessage message, String extension) throws MqttAppException {
 		File file = FileUtility.createMqttMessageFile(topic,
-				GeneralUtility.currDateAndTime() + RandomUtility.generateUUID() + ".txt");
+				GeneralUtility.currDateAndTime() + RandomUtility.generateUUID() + extension);
 		FileUtility.writePayloadToFile(message.getPayload(), file);
 		return file;
 	}

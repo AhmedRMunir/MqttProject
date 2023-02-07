@@ -3,8 +3,9 @@ package com.iointel.mqtt.mqtt_app;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import com.iointel.mqtt.mqtt_app.utilities.MqttUtility;
@@ -16,10 +17,14 @@ public class MqttAppCallback implements MqttCallback {
 	@Override
 	public void connectionLost(Throwable cause) {
 		logger.error(cause);
-		MqttClient client;
+		// TODO: remove content due to automatic reconnect option
 		try {
-			client = MqttUtility.createClient(Constants.Init.BROKER, Constants.Init.CLIENT_ID);
-			MqttUtility.connectClient(client, Cache.callback);
+			MqttAsyncClient client = MqttUtility.createClient(Constants.Init.BROKER,
+					MqttAsyncClient.generateClientId());
+			MqttUtility.setCallbackClient(client, Cache.callback);
+			MqttConnectOptions options = MqttUtility.createOptions(Constants.Init.AUTOMATIC_RECONNECT,
+					Constants.Init.CLEAN_SESSION);
+			MqttUtility.connectClient(client, options);
 		} catch (MqttAppException e) {
 			logger.error(e);
 		}
@@ -30,7 +35,7 @@ public class MqttAppCallback implements MqttCallback {
 		if (message == null || message.getPayload() == null) {
 			logger.info("Null Message Received");
 		} else {
-			Cache.executorService.execute(new SaveMessageTask(topic, message));
+			Cache.executorService.submit(new SaveMessageTask(topic, message));
 		}
 	}
 
