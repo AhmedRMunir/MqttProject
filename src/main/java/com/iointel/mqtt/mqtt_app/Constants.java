@@ -19,7 +19,7 @@ public final class Constants {
 		public static final int QOS = 0;
 		public static final String TMPDIR_PATH = System.getProperty("java.io.tmpdir");
 		public static final String MESSAGE_DIR_NAME = "MqttData";
-		public static final int NUM_THREADS = 2;
+		public static final int NUM_THREADS = 1;
 	}
 
 	public static final class Exceptions {

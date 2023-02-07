@@ -19,6 +19,7 @@ public class SaveMessageTask implements Runnable {
 
 	@Override
 	public void run() {
+		logger.info("logging message");
 		try {
 			FileUtility.saveMessageToFile(topic, message);
 		} catch (MqttAppException e) {

@@ -1,7 +1,5 @@
 package com.iointel.mqtt.mqtt_app;
 
-import java.util.concurrent.TimeUnit;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -32,7 +30,7 @@ public class MqttAppCallback implements MqttCallback {
 		if (message == null || message.getPayload() == null) {
 			logger.info("Null Message Received");
 		} else {
-			Cache.executorService.schedule(new SaveMessageTask(topic, message), 1000, TimeUnit.MILLISECONDS);
+			Cache.executorService.execute(new SaveMessageTask(topic, message));
 		}
 	}
 
