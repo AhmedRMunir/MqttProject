@@ -20,7 +20,7 @@ public final class MqttUtility {
 		try {
 			client = new MqttAsyncClient(broker, clientId);
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CREATE);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CREATE, e);
 		}
 		return client;
 	}
@@ -29,7 +29,7 @@ public final class MqttUtility {
 		try {
 			client.connect(options).waitForCompletion();
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CONNECT);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CONNECT, e);
 		}
 	}
 
@@ -41,7 +41,7 @@ public final class MqttUtility {
 		try {
 			client.close();
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CLOSE);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CLOSE, e);
 		}
 	}
 
@@ -52,7 +52,7 @@ public final class MqttUtility {
 		try {
 			client.disconnect();
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_DISCONNECT);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_DISCONNECT, e);
 		}
 	}
 
@@ -60,7 +60,7 @@ public final class MqttUtility {
 		try {
 			client.subscribe(topics, qos);
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_SUBSCRIBE);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_SUBSCRIBE, e);
 		}
 	}
 
@@ -68,7 +68,7 @@ public final class MqttUtility {
 		try {
 			client.subscribe(topic, qos);
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_SUBSCRIBE);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_SUBSCRIBE, e);
 		}
 	}
 
@@ -77,7 +77,7 @@ public final class MqttUtility {
 		try {
 			client.publish(topic, message);
 		} catch (MqttException e) {
-			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_PUBLISH);
+			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_PUBLISH, e);
 		}
 	}
 
@@ -87,13 +87,14 @@ public final class MqttUtility {
 			try {
 				client.publish(Constants.Init.TOPIC, msg);
 			} catch (MqttException e) {
-				throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_PUBLISH);
+				throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_PUBLISH, e);
 			}
 		}
 	}
 
 	public static MqttMessage createMessage(String content, int qos) {
-		MqttMessage message = new MqttMessage(content.getBytes());
+		byte[] bytes = content.getBytes();
+		MqttMessage message = new MqttMessage(bytes);
 		message.setQos(qos);
 		return message;
 	}

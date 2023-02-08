@@ -19,9 +19,8 @@ public class MqttAppCallback implements MqttCallback {
 		logger.error(cause);
 		// TODO: remove content due to automatic reconnect option
 		try {
-			String generateClientId = MqttAsyncClient.generateClientId();
-			MqttAsyncClient client = MqttUtility.createClient(Constants.Init.BROKER,
-					generateClientId);
+			String clientId = MqttAsyncClient.generateClientId();
+			MqttAsyncClient client = MqttUtility.createClient(Constants.Init.BROKER, clientId);
 			MqttUtility.setCallbackClient(client, new MqttAppCallback());
 			MqttConnectOptions options = MqttUtility.createOptions(Constants.Init.AUTOMATIC_RECONNECT,
 					Constants.Init.CLEAN_SESSION);

@@ -8,6 +8,8 @@ public final class RandomUtility {
 	}
 
 	public static String generateUUID() {
-		return UUID.randomUUID().toString() + Thread.currentThread().getName();
+		String randomUUID = UUID.randomUUID().toString();
+		String threadName = Thread.currentThread().getName();
+		return randomUUID + threadName;
 	}
 }

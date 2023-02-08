@@ -19,8 +19,9 @@ public final class FileUtility {
 	}
 
 	public static File saveMessageToFile(String topic, MqttMessage message, String extension) throws MqttAppException {
-		File file = FileUtility.createMqttMessageFile(topic,
-				GeneralUtility.currDateAndTime() + RandomUtility.generateUUID() + extension);
+		String currDateAndTime = GeneralUtility.currDateAndTime();
+		String uuid = RandomUtility.generateUUID();
+		File file = FileUtility.createMqttMessageFile(topic, currDateAndTime + uuid + extension);
 		FileUtility.writePayloadToFile(message.getPayload(), file);
 		return file;
 	}
@@ -62,7 +63,7 @@ public final class FileUtility {
 				throw new MqttAppException(Constants.Exceptions.Util.FILE_CREATE);
 			}
 		} catch (IOException e) {
-			throw new MqttAppException(Constants.Exceptions.Util.FILE_CREATE);
+			throw new MqttAppException(Constants.Exceptions.Util.FILE_CREATE, e);
 		}
 		return file;
 	}
@@ -72,7 +73,7 @@ public final class FileUtility {
 			os.write(payload, 0, payload.length);
 			CloseUtility.close(os);
 		} catch (IOException e) {
-			throw new MqttAppException(Constants.Exceptions.Util.OUTPUTSTREAM);
+			throw new MqttAppException(Constants.Exceptions.Util.OUTPUTSTREAM, e);
 		}
 	}
 }
