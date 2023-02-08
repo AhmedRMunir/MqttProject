@@ -5,6 +5,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import com.iointel.mqtt.mqtt_app.Constants;
 import com.iointel.mqtt.mqtt_app.MqttAppException;
@@ -18,7 +19,7 @@ public final class MqttUtility {
 	public static MqttAsyncClient createClient(String broker, String clientId) throws MqttAppException {
 		MqttAsyncClient client;
 		try {
-			client = new MqttAsyncClient(broker, clientId);
+			client = new MqttAsyncClient(broker, clientId, new MemoryPersistence());
 		} catch (MqttException e) {
 			throw new MqttAppException(Constants.Exceptions.Mqtt.CLIENT_CREATE, e);
 		}
